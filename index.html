@@ -500,159 +500,273 @@
         });
     </script>
 <!--     ここからチャットボット -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-      .ai-chat-button-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        width: 50px;
-        height: 50px;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        background: #007bff;
-        color: white;
-        border-radius: 50%;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 9999;
-        transition: background 0.3s ease-in-out;
-      }
-      .ai-chat-button-icon {
-        font-size: 24px;
-      }
-      /* チャットウィンドウのスタイル */
-      .ai-chat-container {
-        position: fixed;
-        bottom: 5vh;
-        right: 5vw;
-        width: 24rem;
-        height: 40rem;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        display: none;
-        flex-direction: column;
-        overflow: hidden;
-        transition: opacity 0.3s ease-in-out;
-        z-index: 9999;
-      }
-      .ai-chat-header {
-        position: relative;
-        background: #007bff;
-        color: white;
-        padding: 15px;
-        padding-right: 50px;
-        text-align: center;
-        font-size: 20px;
-        font-weight: bold;
-      }
-      .ai-close-chat {
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-        font-size: 24px;
-        cursor: pointer;
-        z-index: 10;
-      }
-      .ai-chat-box {
-        flex: 1;
-        padding: 15px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        background: #f9f9f9;
-        display: flex;
-        flex-direction: column;
-      }
-      .ai-message-container {
-        display: flex;
-        margin: 10px 0;
-      }
-      .ai-message {
-        max-width: 75%;
-        padding: 14px;
-        border-radius: 10px;
-        display: inline-block;
-        word-wrap: break-word;
-        font-size: 16px;
-      }
-      .ai-bot-container {
-        justify-content: flex-start;
-        display: flex;
-      }
-      .ai-bot {
-        background-color: #e5e5e5;
-        color: black;
-        border-radius: 10px 10px 10px 0;
-        padding: 10px;
-      }
-    </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+  .ai-chat-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    transition: background 0.3s ease-in-out;
+  }
+  .ai-chat-button-icon {
+    font-size: 24px;
+  }
+  /* チャットウィンドウのスタイル */
+  .ai-chat-container {
+    position: fixed;
+    bottom: 5vh;
+    right: 5vw;
+    width: 24rem;
+    height: 40rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 9999;
+  }
+  .ai-chat-header {
+    position: relative;
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    padding-right: 50px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .ai-close-chat {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .ai-chat-box {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+  }
+  .ai-message-container {
+    display: flex;
+    margin: 10px 0;
+  }
+  .ai-message {
+    max-width: 75%;
+    padding: 14px;
+    border-radius: 10px;
+    display: inline-block;
+    word-wrap: break-word;
+    font-size: 16px;
+  }
+  .ai-user-container {
+    justify-content: flex-end;
+    display: flex;
+  }
+  .ai-user {
+    background-color: #007bff;
+    color: white;
+    border-radius: 10px 10px 0 10px;
+    padding: 10px;
+  }
+  .ai-bot-container {
+    justify-content: flex-start;
+    display: flex;
+  }
+  .ai-bot {
+    background-color: #e5e5e5;
+    color: black;
+    border-radius: 10px 10px 10px 0;
+    padding: 10px;
+  }
+  .ai-chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+    padding: 15px;
+    background: white;
+  }
+  .ai-user-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+  }
+  .ai-send-button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+  }
+  .ai-send-button:hover {
+    background: #0056b3;
+  }
+</style>
+
+<!-- チャットボタン -->
+<div id="ai-chat-button" class="ai-chat-button-container">
+  <div class="ai-chat-button-icon">
+    <i class="fas fa-robot"></i>
+  </div>
+</div>
+
+<!-- チャットウィンドウ -->
+<div id="ai-chat-container" class="ai-chat-container">
+  <div class="ai-chat-header">
+    AIアシスタント
+    <span class="ai-close-chat"><i class="fas fa-times"></i></span>
+  </div>
+  <div class="ai-chat-box"></div>
+  <div class="ai-chat-input">
+    <input type="text" class="ai-user-input" placeholder="メッセージを入力...">
+    <button class="ai-send-button"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<script>
+  // 設定
+  const config = {
+    baseUrl: 'https://webbotv3-201858952361.us-central1.run.app',
+    welcomeMessage: 'こんにちは、このチャットボットについて何か質問はありますか？'
+  };
+  
+  // チャットウィンドウとボタンの要素を取得
+  const chatButton = document.getElementById('ai-chat-button');
+  const chatContainer = document.getElementById('ai-chat-container');
+  const chatBox = document.querySelector('.ai-chat-box');
+  const closeButton = document.querySelector('.ai-close-chat');
+  const userInput = document.querySelector('.ai-user-input');
+  const sendButton = document.querySelector('.ai-send-button');
+  
+  // 初期化フラグ
+  let initialized = false;
+  
+  // メッセージ表示処理
+  function appendMessage(content, sender, isHTML = false) {
+    const msgContainer = document.createElement('div');
+    msgContainer.className = `ai-message-container ai-${sender}-container`;
     
-    <!-- チャットボタン -->
-    <div id="ai-chat-button" class="ai-chat-button-container">
-      <div class="ai-chat-button-icon">
-        <i class="fas fa-robot"></i>
-      </div>
-    </div>
+    const msg = document.createElement('div');
+    msg.className = `ai-message ai-${sender}`;
     
-    <!-- チャットウィンドウ -->
-    <div id="ai-chat-container" class="ai-chat-container">
-      <div class="ai-chat-header">
-        AIアシスタント
-        <span class="ai-close-chat"><i class="fas fa-times"></i></span>
-      </div>
-      <div class="ai-chat-box"></div>
-    </div>
-    
-    <script>
-      // 設定
-      const config = {
-        baseUrl: 'https://webbotv3-201858952361.us-central1.run.app',
-        welcomeMessage: 'こんにちは、このチャットボットについて何か質問はありますか？'
-      };
+    if (isHTML) {
+      msg.innerHTML = content;
+    } else if (sender === 'bot') {
+      // ボットのメッセージ（タイピングエフェクト付き）
+      const text = content;
+      let index = 0;
+      let displayText = '';
       
-      // チャットウィンドウとボタンの要素を取得
-      const chatButton = document.getElementById('ai-chat-button');
-      const chatContainer = document.getElementById('ai-chat-container');
-      const chatBox = document.querySelector('.ai-chat-box');
-      const closeButton = document.querySelector('.ai-close-chat');
-      
-      // 初期化フラグ
-      let initialized = false;
-      
-      // チャットボタンクリック時のイベントリスナー
-      chatButton.addEventListener('click', function() {
-        // チャットウィンドウを表示
-        chatContainer.style.display = 'flex';
-        
-        // 初回のみウェルカムメッセージを表示
-        if (!initialized) {
-          initialized = true;
+      function typeNextChar() {
+        if (index < text.length) {
+          // 次の文字を追加
+          displayText += text.charAt(index);
           
-          // ウェルカムメッセージ用の要素を作成
-          const msgContainer = document.createElement('div');
-          msgContainer.className = 'ai-message-container ai-bot-container';
+          // 改行を<br>タグに変換
+          msg.innerHTML = displayText.replace(/\n/g, '<br>');
           
-          const msg = document.createElement('div');
-          msg.className = 'ai-message ai-bot';
-          msg.textContent = config.welcomeMessage;
-          
-          // DOMに追加
-          msgContainer.appendChild(msg);
-          chatBox.appendChild(msgContainer);
+          chatBox.scrollTop = chatBox.scrollHeight;
+          index++;
+          setTimeout(typeNextChar, 10); // タイピング速度（ミリ秒）
         }
-      });
+      }
       
-      // 閉じるボタンクリック時のイベントリスナー
-      closeButton.addEventListener('click', function() {
-        chatContainer.style.display = 'none';
-      });
-    </script>
+      typeNextChar();
+    } else {
+      // ユーザーメッセージ（タイピングエフェクトなし）
+      msg.innerHTML = content.replace(/\n/g, '<br>');
+    }
     
-    <!-- embed.jsは最後に読み込む -->
-    <script src="https://webbotv3-201858952361.us-central1.run.app/embed.js"></script>
+    msgContainer.appendChild(msg);
+    chatBox.appendChild(msgContainer);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    return msgContainer;
+  }
+  
+  // メッセージ送信処理
+  function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+    
+    // ユーザーメッセージを表示
+    appendMessage(message, 'user');
+    userInput.value = '';
+    
+    // ローディングスピナーを表示
+    const typingBubble = appendMessage('<i class="fas fa-spinner fa-spin"></i>', 'bot', true);
+    
+    // APIリクエスト
+    fetch(config.baseUrl + '/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: message })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // ローディング削除
+      typingBubble.remove();
+      // ボットの回答を表示
+      appendMessage(data.answer, 'bot');
+    })
+    .catch(error => {
+      console.error('エラー:', error);
+      typingBubble.remove();
+      appendMessage('⚠️ エラーが発生しました', 'bot');
+    });
+  }
+  
+  // チャットボタンクリック時のイベントリスナー
+  chatButton.addEventListener('click', function() {
+    // チャットウィンドウを表示
+    chatContainer.style.display = 'flex';
+    
+    // 初回のみウェルカムメッセージを表示
+    if (!initialized) {
+      initialized = true;
+      appendMessage(config.welcomeMessage, 'bot');
+    }
+  });
+  
+  // 閉じるボタンクリック時のイベントリスナー
+  closeButton.addEventListener('click', function() {
+    chatContainer.style.display = 'none';
+  });
+  
+  // 送信ボタンクリック時のイベントリスナー
+  sendButton.addEventListener('click', sendMessage);
+  
+  // Enterキー押下時の送信処理
+  userInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  });
+</script>
 </body>
 </html>
 
